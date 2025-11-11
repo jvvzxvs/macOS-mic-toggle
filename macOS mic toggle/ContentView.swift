@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isMuted = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(spacing: 16) {
+            Button {
+                let newValue = !isMuted
+                MicController.shared.setMuted(newValue)
+                isMuted = newValue
+            } label: {
+                Image(systemName: isMuted ? "mic.slash" : "mic")
+                    .font(.system(size: 70))
+                    .foregroundColor(.white)
+            }
+
+            .keyboardShortcut(.space, modifiers: []) // по желанию
         }
         .padding()
+        .frame(width: 220, height: 120)
     }
-}
-
-#Preview {
-    ContentView()
 }
